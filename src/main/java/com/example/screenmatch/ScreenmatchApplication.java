@@ -2,7 +2,6 @@ package com.example.screenmatch;
 
 import java.io.IOException;
 
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.example.screenmatch.model.DadosSerie;
@@ -25,37 +24,6 @@ public class ScreenmatchApplication {
 		DadosSerie dados = conversor.obterDados(busca, DadosSerie.class);
 		
 		System.out.println(dados);
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
 		
 	}
 
