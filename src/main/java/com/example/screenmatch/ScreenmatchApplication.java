@@ -24,38 +24,7 @@ public class ScreenmatchApplication {
 		
 		DadosSerie dados = conversor.obterDados(busca, DadosSerie.class);
 		
-		System.out.println(dados);
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+		System.out.println(dados);	
 		
 	}
 
