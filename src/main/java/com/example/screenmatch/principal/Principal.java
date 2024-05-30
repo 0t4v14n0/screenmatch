@@ -1,8 +1,16 @@
 package com.example.screenmatch.principal;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
+import com.example.screenmatch.model.DadosEpisodio;
+import com.example.screenmatch.model.DadosSerie;
+import com.example.screenmatch.model.DadosTemporada;
+import com.example.screenmatch.model.Episodio;
 import com.example.screenmatch.service.ConsumindoAPI;
 import com.example.screenmatch.service.ConverteDados;
 
@@ -20,7 +28,48 @@ public class Principal {
             
             var nomeSerie = leitura.nextLine();
             
-            System.out.println(retornaConsulta(nomeSerie,"",""));
+            String json = retornaConsulta(nomeSerie,"","");
+            
+            System.out.println(json);
+            
+            DadosSerie dados = conversor.obterDados(json, DadosSerie.class);
+            
+            List<DadosTemporada> temporadas = new ArrayList<>();
+            
+            for(int i = 1; i <= dados.totalTemporadas(); i++) {
+                
+                String busca = retornaConsulta(nomeSerie, "" + i, "");
+                
+                DadosTemporada temporada = conversor.obterDados(busca, DadosTemporada.class);
+                
+                System.out.println(temporada);
+                
+                temporadas.add(temporada);
+            }
+            
+            temporadas.forEach(t -> t.episodios().forEach(e -> System.out.println(e.titulo())));
+            
+            List<DadosEpisodio> dadosEpisodios = temporadas.stream()
+                    .flatMap(t -> t.episodios().stream())
+                    .collect(Collectors.toList());
+            
+                    
+            System.out.println("\n Top 5 episódios");
+            dadosEpisodios.stream()
+            	.filter(e -> !e.avaliacao().equalsIgnoreCase("N/A"))
+            	.sorted(Comparator.comparing(DadosEpisodio::avaliacao).reversed())
+            	.limit(5)
+            	.forEach(System.out::println);
+            
+            System.out.println("\n Lista de Episodios: ");
+            
+            //classe EPISODIO
+            List<Episodio> episodios = temporadas.stream()
+                    .flatMap(t -> t.episodios().stream()
+                    		.map(d -> new Episodio(t.numero(),d))
+                    		).collect(Collectors.toList());
+            
+            episodios.forEach(System.out::println);
             
     }
     
@@ -34,7 +83,7 @@ public class Principal {
 		} catch (IOException | InterruptedException e) {
 			e.printStackTrace();
 		}
-        
+           
 		return retorno;
 		
     }
