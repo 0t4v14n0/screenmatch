@@ -44,7 +44,7 @@ public class ConsumindoAPI {
                         
         String retorno = response.body();
         
-        System.out.println(retorno);
+        //System.out.println(retorno);
 
         return retorno;
         
