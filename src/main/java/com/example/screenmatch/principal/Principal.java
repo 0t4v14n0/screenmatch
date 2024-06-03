@@ -6,6 +6,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
@@ -56,6 +57,7 @@ public class Principal {
                     .collect(Collectors.toList());
             
                     
+            //top 5 episodios
             System.out.println("\n Top 5 episódios");
             dadosEpisodios.stream()
             	.filter(e -> !e.avaliacao().equalsIgnoreCase("N/A"))
@@ -73,7 +75,7 @@ public class Principal {
             
             episodios.forEach(System.out::println);
             
-            
+            // busca por ano
             System.out.println("A partir de que ano você deseja ver os episódios? ");
             var ano = leitura.nextInt();
             leitura.nextLine();
@@ -88,7 +90,21 @@ public class Principal {
                             "Temporada:  " + e.getTemporada() +
                                     " Episódio: " + e.getTitulo() +
                                     " Data lançamento: " + e.getDataLancamento().format(formatador)
-                    ));      
+                    ));
+            
+            //busca episodio
+            System.out.println("Buscar por: ");
+            var trecho = leitura.nextLine();
+            
+            Optional<Episodio> episodioBuscado = episodios.stream()
+                    .filter(e -> e.getTitulo().contains(trecho))
+                    .findFirst();
+            if(episodioBuscado.isPresent()){
+                System.out.println("Episódio encontrado!");
+                System.out.println("Temporada: " + episodioBuscado.get().getTemporada());
+            } else {
+                System.out.println("Episódio não encontrado!");
+            }
             
     }
     
