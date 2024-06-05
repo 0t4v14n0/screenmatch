@@ -125,6 +125,14 @@ public class Principal {
             
     }
     
+    public  void menuSerie() {
+    	
+    }
+    
+    public  void menuEpisodio() {
+    	
+    }
+    
     public String retornaConsulta(String nomeSerie,String temporada,String episodio) {
     	
     	String retorno = "";
