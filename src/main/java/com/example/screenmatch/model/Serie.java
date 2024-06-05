@@ -2,6 +2,8 @@ package com.example.screenmatch.model;
 
 import java.util.OptionalDouble;
 
+import com.example.screenmatch.service.ConsultaChatGPT;
+
 public class Serie {
 	
 	private String titulo;
@@ -25,7 +27,7 @@ public class Serie {
 		this.genero = Categoria.fromString(dadosSerie.genero().split(",")[0].trim()); //split divide as informaoes em um array|| trim tira espaco em branco ficando oq inporta
 		this.diretor = dadosSerie.diretor();
 		this.ator = dadosSerie.ator();
-		this.sinopse = dadosSerie.sinopse();
+		this.sinopse = ConsultaChatGPT.obterTraducao(dadosSerie.sinopse()).trim();
 		this.poster = dadosSerie.poster();
 		
 	}
