@@ -8,7 +8,7 @@ public class ConsultaChatGPT {
 	public static String obterTraducao(String texto) {
 		
 		OpenAiService service = new OpenAiService("SUA API KEY");
-
+		
 		CompletionRequest requisicao = CompletionRequest.builder()
 				.model("gpt-3.5-turbo-instruct")
 				.prompt("traduza para o português o texto: " + texto)
