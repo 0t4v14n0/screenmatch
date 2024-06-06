@@ -1,21 +1,47 @@
 package com.example.screenmatch.model;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.OptionalDouble;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 
 import com.example.screenmatch.service.ConsultaChatGPT;
 
+@Entity
+@Table(name = "series")
 public class Serie {
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+	
+	@Column(unique = true)
 	private String titulo;
+	
 	private String ano;
 	private Integer totalTemporadas;
 	private double nota;
 	private String data;
+	
+	@Enumerated(EnumType.STRING)
 	private Categoria genero;
+	
 	private String diretor;
 	private String ator;
 	private String sinopse;
 	private String poster;
+	
+	@Transient
+	private List<Episodio> episodio = new ArrayList<>();
 	
 	public Serie(DadosSerie dadosSerie) {
 		
@@ -30,6 +56,22 @@ public class Serie {
 		this.sinopse = ConsultaChatGPT.obterTraducao(dadosSerie.sinopse()).trim();
 		this.poster = dadosSerie.poster();
 		
+	}
+		
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+	
+	public List<Episodio> getEpisodio() {
+		return episodio;
+	}
+
+	public void setEpisodio(List<Episodio> episodio) {
+		this.episodio = episodio;
 	}
 
 	public String getTitulo() {
