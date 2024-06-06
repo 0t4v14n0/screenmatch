@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 import com.example.screenmatch.model.DadosSerie;
 import com.example.screenmatch.model.DadosTemporada;
 import com.example.screenmatch.model.Serie;
+import com.example.screenmatch.repository.SerieRepository;
 import com.example.screenmatch.service.ConsumindoAPI;
 import com.example.screenmatch.service.ConverteDados;
 
@@ -23,7 +24,14 @@ public class TestePrincipal {
     
     private List<DadosSerie> dadosSerie = new ArrayList<>();
     
-    public void exibMenu(){
+    private SerieRepository repositorio;
+    
+    public TestePrincipal(SerieRepository repositorio) {
+    	this.repositorio = repositorio;
+	}
+
+
+	public void exibMenu(){
     	
     	var opcao = 4;
     	
@@ -65,10 +73,8 @@ public class TestePrincipal {
     
     
     private void listarSeriesBuscadas() {
-    	List<Serie> series = new ArrayList<>();
-    	series = dadosSerie.stream()
-    				.map(d -> new Serie(d))
-    					.collect(Collectors.toList());
+    	
+    	List<Serie> series = repositorio.findAll();
     	
 		series.stream()
 				.sorted(Comparator.comparing(Serie::getGenero))
@@ -78,7 +84,10 @@ public class TestePrincipal {
 
 	private void buscarSerieWeb() {
         DadosSerie dados = getDadosSerie();
-        dadosSerie.add(dados);
+        Serie serie = new Serie(dados);
+        System.out.println(serie);
+        repositorio.save(serie);
+        //dadosSerie.add(dados);
         System.out.println(dados);
     }
 
@@ -95,6 +104,7 @@ public class TestePrincipal {
     }
 
     private void buscarEpisodioPorSerie(){
+    	
         DadosSerie dadosSerie = getDadosSerie();
         
         List<DadosTemporada> temporadas = new ArrayList<>();
@@ -119,6 +129,7 @@ public class TestePrincipal {
     	
         try {
 			retorno = consumo.busca(nomeSerie, temporada, episodio);
+			System.out.println(retorno);
 		} catch (IOException | InterruptedException e) {
 			e.printStackTrace();
 		}
