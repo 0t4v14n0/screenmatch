@@ -6,7 +6,7 @@ import com.theokanning.openai.OpenAiHttpException;
 
 public class ConsultaChatGPT {
 
-    private static final String API_KEY = "sk-proj-ujHw7ynzwdgwGjQidYoDT3BlbkFJHBJpDR8tP6O8zj5WYeA5";
+    private static final String API_KEY = "SUA_API_KEY";
     private static final int MAX_RETRIES = 3;
     private static final int RETRY_DELAY_MS = 1000; // 1 segundo
 
