@@ -35,7 +35,6 @@ public class TestePrincipal {
     	this.repositorio = repositorio;
 	}
 
-
 	public void exibMenu(){
     	
     	var opcao = 4;
@@ -106,8 +105,7 @@ public class TestePrincipal {
     	}while(opcao != 0);    	
     	
     }
-    
-    
+     
     private void buscarEpisodiosDepoisDeUmaData() {
     	
         buscarSeriePorTitulo();
@@ -123,7 +121,6 @@ public class TestePrincipal {
 		
 	}
 
-
 	private void topEpisodiosPorSerie() {
     	
         buscarSeriePorTitulo();
@@ -138,7 +135,6 @@ public class TestePrincipal {
 		
 	}
 
-
 	private void buscarEpisodioPorTrecho() {
     	
         System.out.println("Qual o nome do episódio para busca?");
@@ -150,7 +146,6 @@ public class TestePrincipal {
                         e.getNumeroEpisodio(), e.getTitulo()));
 		
 	}
-
 
 	private void filtrarSeriesPorTemporadaEAvaliacao() {
     	
@@ -167,7 +162,6 @@ public class TestePrincipal {
 		
 	}
 
-
 	private void buscarSeriesPorCategoria() {
         System.out.println("Deseja buscar séries de que categoria/gênero? ");
         var nomeGenero = leitura.nextLine();
@@ -178,14 +172,12 @@ public class TestePrincipal {
 		
 	}
 
-
 	private void buscarTop5Series() {
-        List<Serie> serieTop = repositorio.findTop5ByOrderByAvaliacaoDesc();
+        List<Serie> serieTop = repositorio.findTop5ByOrderByNotaDesc();
         serieTop.forEach(s ->
                 System.out.println(s.getTitulo() + " avaliação: " + s.getNota()));
 		
 	}
-
 
 	private void buscarSeriesPorAtor() {
     	
@@ -193,12 +185,11 @@ public class TestePrincipal {
         var nomeAtor = leitura.nextLine();
         System.out.println("Avaliações a partir de que valor? ");
         var avaliacao = leitura.nextDouble();
-        List<Serie> seriesEncontradas = repositorio.findByAtoresContainingIgnoreCaseAndAvaliacaoGreaterThanEqual(nomeAtor, avaliacao);
+        List<Serie> seriesEncontradas = repositorio.findByAtorContainingIgnoreCaseAndNotaGreaterThanEqual(nomeAtor, avaliacao);
         System.out.println("Séries em que " + nomeAtor + " trabalhou: ");
         seriesEncontradas.forEach(s ->
                 System.out.println(s.getTitulo() + " avaliação: " + s.getNota()));		
 	}
-
 
 	private void buscarSeriePorTitulo() {
     	
@@ -215,7 +206,6 @@ public class TestePrincipal {
 		
 	}
 
-
 	private void listarSeriesBuscadas() {
     	
     	series = repositorio.findAll();
@@ -224,7 +214,6 @@ public class TestePrincipal {
 				.sorted(Comparator.comparing(Serie::getGenero))
 				.forEach(System.out::println);
     }
-
 
 	private void buscarSerieWeb() {
         DadosSerie dados = getDadosSerie();
@@ -278,7 +267,7 @@ public class TestePrincipal {
             		.map(e -> new Episodio(d.numero(), e)))
             			.collect(Collectors.toList());
             
-            serieEncontrada.setEpisodio(episodios);
+            serieEncontrada.setEpisodios(episodios);
             
             repositorio.save(serieEncontrada);
             

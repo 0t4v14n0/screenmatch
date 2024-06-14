@@ -15,7 +15,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import jakarta.persistence.Transient;
 
 import com.example.screenmatch.service.ConsultaChatGPT;
 
@@ -44,7 +43,7 @@ public class Serie {
 	private String poster;
 	
 	@OneToMany(mappedBy = "serie", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	private List<Episodio> episodio = new ArrayList<>();
+    private List<Episodio> episodios = new ArrayList<>();
 	
 	public Serie() {}
 	
@@ -71,14 +70,14 @@ public class Serie {
 		this.id = id;
 	}
 	
-	public List<Episodio> getEpisodio() {
-		return episodio;
-	}
+    public List<Episodio> getEpisodios() {
+        return episodios;
+    }
 
-	public void setEpisodio(List<Episodio> episodios) {
-		episodios.forEach(e -> e.setSerie(this));
-		this.episodio = episodios;
-	}
+    public void setEpisodios(List<Episodio> episodios) {
+        episodios.forEach(e -> e.setSerie(this));
+        this.episodios = episodios;
+    }
 
 	public String getTitulo() {
 		return titulo;
@@ -171,6 +170,6 @@ public class Serie {
 				", Ator = '"+ator+"'\''"+
 				", Sinopse = '"+sinopse+"'\''"+
 				", Poster = '"+poster+"'\''"+
-				", episodios = '"+episodio+"'\''";
+				", episodios = '"+episodios+"'\''";
 	}
 }
