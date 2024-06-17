@@ -37,9 +37,12 @@ public class SerieService {
 					s.getTitulo(), 
 					s.getAno(), 
 					s.getTotalTemporadas(),
-					s.getNota(), s.getData(), 
-					s.getGenero(), s.getDiretor(),
-					s.getAtor(), s.getSinopse(),
+					s.getNota(), 
+					s.getData(), 
+					s.getGenero(), 
+					s.getDiretor(),
+					s.getAtor(), 
+					s.getSinopse(),
 					s.getPoster());
 		}
 		return null;
@@ -53,9 +56,22 @@ public class SerieService {
                 return s.getEpisodios().stream()
                                 .map(e -> new EpisodioDTO(e.getTemporada(), e.getNumeroEpisodio(), e.getTitulo()))
                                 .collect(Collectors.toList());
+        }else {
+        	return null;
         }
-        return null;
 	}
+	
+	public List<EpisodioDTO> obterTemporadasPorNumero(Long id, Long numero) {
+        return repositorio.obterEpisodiosPorTemporada(id, numero)
+                        .stream()
+                        .map(e -> new EpisodioDTO(e.getTemporada(), e.getNumeroEpisodio(), e.getTitulo()))
+                        .collect(Collectors.toList());
+	}
+	
+    public List<SerieDTO> obterSeriesPorCategoria(String nomeGenero) {
+        Categoria categoria = Categoria.fromPortugues(nomeGenero);
+        return converteDados(repositorio.findByGenero(categoria));
+    }
 	
     private List<SerieDTO> converteDados(List<Serie> series) {
         return series.stream()
@@ -63,9 +79,12 @@ public class SerieService {
         					s.getTitulo(), 
         					s.getAno(), 
         					s.getTotalTemporadas(),
-        					s.getNota(), s.getData(), 
-        					s.getGenero(), s.getDiretor(),
-        					s.getAtor(), s.getSinopse(),
+        					s.getNota(), 
+        					s.getData(), 
+        					s.getGenero(), 
+        					s.getDiretor(),
+        					s.getAtor(), 
+        					s.getSinopse(),
         					s.getPoster()))
                     .collect(Collectors.toList());
     }
