@@ -11,7 +11,7 @@ import java.nio.charset.StandardCharsets;
 public class ConsumindoAPI {
 
 	private static final String BASE_URL = "https://www.omdbapi.com/?t=";
-	private static final String apiKey = "&apikey=c16acd6a";
+	private static final String apiKey = "&apikey=SUA_API_KEY;
     
     public String busca(String nome,String temporada,String episodio) throws IOException, InterruptedException { 
 
